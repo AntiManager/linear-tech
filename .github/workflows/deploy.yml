@@ -1,6 +1,8 @@
-name: Deploy to VPS
+name: CI
 on:
   push:
+    branches: [master]
+  pull_request:
     branches: [master]
 
 jobs:
@@ -16,16 +18,15 @@ jobs:
         working-directory: ./frontend
       - run: npx tsc --noEmit
         working-directory: ./frontend
-      - run: npx playwright install --with-deps chromium
-      - run: npx playwright test tests/e2e
-      - uses: actions/upload-artifact@v4
-        if: failure()
-        with: { name: playwright-report, path: playwright-report/ }
+      # E2E tests require full stack (Strapi + PostgreSQL + Meilisearch).
+      # Run locally: npm run test:e2e
+      # Will be added to CI when staging environment is set up.
 
   deploy:
     needs: [test]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master'
+    environment: production
     steps:
       - uses: actions/checkout@v4
       - name: Deploy via SSH
@@ -38,5 +39,4 @@ jobs:
             cd /opt/linear-tech
             git pull origin master
             docker compose up -d --build nextjs
-            docker compose exec -T strapi npm run build
-            docker compose exec -T strapi pm2 reload 0 || true
+            docker compose restart strapi
