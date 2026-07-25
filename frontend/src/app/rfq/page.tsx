@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import type { Metadata } from 'next';
 import Link from 'next/link';
 import { useRFQBasket } from '@/components/rfq/RFQBasket';
 import RFQForm from '@/components/rfq/RFQForm';

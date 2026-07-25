@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import Link from 'next/link';
 import Button from '../ui/Button';
 
@@ -26,6 +26,7 @@ function loadBasket(): BasketItem[] {
 function saveBasket(items: BasketItem[]) {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+    window.dispatchEvent(new Event('rfq:change'));
   } catch {
     /* storage full */
   }
@@ -102,7 +103,16 @@ export default function RFQBasket({ onOpenForm }: RFQBasketProps) {
 }
 
 export function RFQBasketBadge() {
-  const [count] = useState(() => loadBasket().length);
+  const [count, setCount] = useState(() => loadBasket().length);
+
+  useEffect(() => {
+    function refresh() {
+      setCount(loadBasket().length);
+    }
+    refresh();
+    window.addEventListener('rfq:change', refresh);
+    return () => window.removeEventListener('rfq:change', refresh);
+  }, []);
 
   if (count === 0) return null;
 
