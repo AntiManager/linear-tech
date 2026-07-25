@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import Link from 'next/link';
 import Button from '../ui/Button';
 
@@ -36,13 +36,7 @@ interface RFQBasketProps {
 }
 
 export default function RFQBasket({ onOpenForm }: RFQBasketProps) {
-  const [items, setItems] = useState<BasketItem[]>([]);
-  const [hydrated, setHydrated] = useState(false);
-
-  useEffect(() => {
-    setItems(loadBasket());
-    setHydrated(true);
-  }, []);
+  const [items, setItems] = useState<BasketItem[]>(() => loadBasket());
 
   const updateItems = useCallback((next: BasketItem[]) => {
     setItems(next);
@@ -58,7 +52,7 @@ export default function RFQBasket({ onOpenForm }: RFQBasketProps) {
     updateItems(items.map((i) => (i.productId === id ? { ...i, qty } : i)));
   }
 
-  if (!hydrated) return null;
+  if (items.length === 0) return null;
 
   return (
     <>
@@ -108,15 +102,9 @@ export default function RFQBasket({ onOpenForm }: RFQBasketProps) {
 }
 
 export function RFQBasketBadge() {
-  const [count, setCount] = useState(0);
-  const [hydrated, setHydrated] = useState(false);
+  const [count] = useState(() => loadBasket().length);
 
-  useEffect(() => {
-    setCount(loadBasket().length);
-    setHydrated(true);
-  }, []);
-
-  if (!hydrated || count === 0) return null;
+  if (count === 0) return null;
 
   return (
     <Link href="/rfq" className="relative inline-flex items-center text-white hover:opacity-80">
@@ -131,11 +119,7 @@ export function RFQBasketBadge() {
 }
 
 export function useRFQBasket() {
-  const [items, setItems] = useState<BasketItem[]>([]);
-
-  useEffect(() => {
-    setItems(loadBasket());
-  }, []);
+  const [items, setItems] = useState<BasketItem[]>(() => loadBasket());
 
   const add = useCallback((item: BasketItem) => {
     setItems((prev) => {
