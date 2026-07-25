@@ -5,10 +5,21 @@
 Перенос на VPS клиента. Исходников нет — весь контент парсим с живого сайта.
 
 ## Текущий статус
-- **CMS**: Joomla (кастомный шаблон jblank)
-- **Сайт**: https://www.linear-tech.ru
-- **Хостинг**: будет определён (VPS клиента)
-- **Стек**: будет определён (рекомендуется Python Django/Next.js или WordPress)
+- **Старый сайт**: https://www.linear-tech.ru (Joomla, кастомный шаблон jblank)
+- **Хостинг**: VPS клиента (будет определён)
+- **Стек**: Next.js 14 + Strapi 5 + PostgreSQL 16 + Meilisearch + Docker
+
+### Архитектура стека
+```
+Frontend:  Next.js 14 (App Router) + React 18 RSC + Tailwind CSS 4 + TypeScript
+CMS:       Strapi 5 (Headless, self-hosted, MIT)
+Database:  PostgreSQL 16
+Search:    Meilisearch (full-text search по артикулам/товарам)
+Cache:     Redis 7
+Deploy:    Docker Compose на Ubuntu VPS + GitHub Actions CI/CD
+CDN:       Cloudflare (free)
+CRM:       Интеграция с Битрикс24 через REST API
+```
 
 ## Задачи проекта (roadmap)
 1. **Парсинг** — вытащить весь контент, структуру, изображения, PDF со старого сайта
