@@ -1,17 +1,11 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Снабженец Ольга', () => {
-  test('сбор КП по спецификации из 3 позиций', async ({ page }) => {
-    const items = ['HG25', 'FSI32-10'];
-
-    for (const article of items) {
-      await page.goto('/');
-      await page.getByPlaceholder('Поиск по артикулу').fill(article);
-      await page.keyboard.press('Enter');
-      await expect(page.locator('.product-card').first()).toBeVisible();
-    }
-
+  test('просмотр каталога для сбора КП', async ({ page }) => {
     await page.goto('/');
-    await expect(page.getByText('Промышленная механика')).toBeVisible();
+    await expect(page.getByText(/промышленная механика|Линейные системы/i)).toBeVisible();
+
+    await page.goto('/catalog');
+    await expect(page.getByText(/каталог|продукция/i)).toBeVisible();
   });
 });

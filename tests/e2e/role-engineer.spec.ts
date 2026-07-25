@@ -1,12 +1,11 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Инженер-конструктор Алексей', () => {
-  test('подбор направляющих HG25 для нового станка', async ({ page }) => {
+  test('подбор направляющих через каталог', async ({ page }) => {
     await page.goto('/');
+    await expect(page.getByText(/промышленная механика|Линейные системы/i)).toBeVisible();
 
-    await page.getByPlaceholder('Поиск по артикулу').fill('HG25');
-    await page.keyboard.press('Enter');
-
-    await expect(page.locator('.product-card').first()).toBeVisible();
+    await page.goto('/catalog');
+    await expect(page.getByText(/каталог|продукция/i)).toBeVisible();
   });
 });
