@@ -3,7 +3,10 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import ContactCTA from "@/components/layout/ContactCTA";
 import Analytics from "@/components/layout/Analytics";
+import { fetchCategories } from "@/lib/strapi";
+import type { Category } from "@/types";
 
 const inter = Inter({
   subsets: ["cyrillic", "latin"],
@@ -27,17 +30,22 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  let categories: Category[] = [];
+  try {
+    categories = await fetchCategories();
+  } catch {}
   return (
     <html lang="ru" className={`${inter.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
         <Header />
         <main className="flex-1">{children}</main>
-        <Footer />
+        <ContactCTA />
+        <Footer categories={categories} />
         <Analytics />
       </body>
     </html>

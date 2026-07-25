@@ -7,6 +7,7 @@ import type { Product, Category } from '@/types';
 import Badge from '@/components/ui/Badge';
 import Button from '@/components/ui/Button';
 import RFQForm from '@/components/rfq/RFQForm';
+import ProductTabs from '@/components/catalog/ProductTabs';
 
 interface Props {
   params: Promise<{ slug: string; product: string }>;
@@ -61,10 +62,10 @@ export default async function ProductPage({ params }: Props) {
     name: product.name,
     description: product.short_desc || product.description,
     sku: product.article,
-    brand: {
-      '@type': 'Brand',
-      name: product.brand.toUpperCase(),
-    },
+      brand: {
+        '@type': 'Brand',
+        name: product.brand ? product.brand.toUpperCase() : 'HIWIN',
+      },
     offers: {
       '@type': 'Offer',
       price: product.price ?? undefined,
@@ -75,8 +76,6 @@ export default async function ProductPage({ params }: Props) {
       url: `https://linear-tech.ru/catalog/${slug}/${product.slug}`,
     },
   };
-
-  const specEntries = product.specs ? Object.entries(product.specs) : [];
 
   return (
     <>
@@ -166,64 +165,12 @@ export default async function ProductPage({ params }: Props) {
           </div>
         </div>
 
-        <div className="mt-12">
-          <div className="border-b border-gray-200">
-            <nav className="-mb-px flex gap-6">
-              <span className="border-b-2 border-accent pb-3 text-sm font-semibold text-accent">
-                Описание
-              </span>
-              {specEntries.length > 0 && (
-                <span className="pb-3 text-sm font-medium text-muted hover:text-text cursor-pointer">
-                  Характеристики
-                </span>
-              )}
-              {product.pdf_catalog && (
-                <span className="pb-3 text-sm font-medium text-muted hover:text-text cursor-pointer">
-                  PDF
-                </span>
-              )}
-            </nav>
-          </div>
-
-          <div className="py-6">
-            <div className="prose prose-sm max-w-none text-text/80">
-              <div dangerouslySetInnerHTML={{ __html: mdToHtml(product.description || 'Описание отсутствует.') }} />
-            </div>
-          </div>
-
-          {specEntries.length > 0 && (
-            <div className="py-6">
-              <h2 className="mb-4 text-xl font-bold text-text">Характеристики</h2>
-              <table className="w-full text-sm">
-                <tbody>
-                  {specEntries.map(([key, value]) => (
-                    <tr key={key} className="border-b border-gray-100">
-                      <td className="py-2 font-medium text-text w-1/3">{key}</td>
-                      <td className="py-2 text-muted">{String(value)}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
-
-          {product.pdf_catalog && (
-            <div className="py-6">
-              <h2 className="mb-4 text-xl font-bold text-text">Каталог и документация</h2>
-              <a
-                href={product.pdf_catalog.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-btn bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary/90"
-              >
-                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-                Скачать PDF ({product.pdf_catalog.name})
-              </a>
-            </div>
-          )}
-        </div>
+        <ProductTabs
+          description={product.description || 'Описание отсутствует.'}
+          specs={product.specs || {}}
+          pdfUrl={product.pdf_catalog?.url}
+          pdfName={product.pdf_catalog?.name}
+        />
 
         <div className="mt-12 rounded-card border border-gray-200 bg-surface p-6">
           <h2 className="mb-6 text-xl font-bold text-text">Запросить коммерческое предложение</h2>
