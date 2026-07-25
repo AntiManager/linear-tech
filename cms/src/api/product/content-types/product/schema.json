@@ -1,0 +1,88 @@
+{
+  "kind": "collectionType",
+  "collectionName": "products",
+  "info": {
+    "singularName": "product",
+    "pluralName": "products",
+    "displayName": "Product",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false,
+    "comment": ""
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name"
+    },
+    "article": {
+      "type": "string"
+    },
+    "series": {
+      "type": "string"
+    },
+    "brand": {
+      "type": "enumeration",
+      "enum": ["hiwin", "rosca", "delta", "estun", "item", "other"]
+    },
+    "category": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::category.category",
+      "inversedBy": "products"
+    },
+    "description": {
+      "type": "richtext"
+    },
+    "short_desc": {
+      "type": "text"
+    },
+    "specs": {
+      "type": "json"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images"]
+    },
+    "pdf_catalog": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["files"]
+    },
+    "price": {
+      "type": "decimal"
+    },
+    "price_opt": {
+      "type": "decimal"
+    },
+    "stock_status": {
+      "type": "enumeration",
+      "enum": ["in_stock", "on_order", "out_of_stock"]
+    },
+    "stock_qty": {
+      "type": "integer"
+    },
+    "delivery_days": {
+      "type": "integer"
+    },
+    "is_featured": {
+      "type": "boolean"
+    },
+    "analogues": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::product.product"
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "default.seo-component"
+    }
+  }
+}

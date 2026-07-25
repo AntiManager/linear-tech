@@ -1,0 +1,16 @@
+{
+  "name": "linear-tech",
+  "private": true,
+  "scripts": {
+    "dev": "cd frontend && npm run dev",
+    "build": "cd frontend && npm run build",
+    "test:e2e": "npx playwright test tests/e2e",
+    "test:e2e:ui": "npx playwright test --ui",
+    "test:visual": "npx playwright test tests/visual",
+    "lint": "cd frontend && npm run lint",
+    "typecheck": "cd frontend && npx tsc --noEmit"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.50"
+  }
+}

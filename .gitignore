@@ -9,6 +9,8 @@ data/pdf/*
 .env
 .env.local
 .env.*.local
+.env.production
+cms/.env
 
 # Python
 __pycache__/
@@ -34,6 +36,13 @@ build/
 .idea/
 *.swp
 *.swo
+
+# Test artifacts
+playwright-report/
+test-results.json
+
+# Strapi build cache (auto-generated, like .next/)
+cms/.strapi/
 
 # OS
 .DS_Store

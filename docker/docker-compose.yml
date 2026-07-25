@@ -1,0 +1,110 @@
+services:
+  traefik:
+    image: traefik:v3.1
+    restart: unless-stopped
+    command:
+      - "--api.insecure=false"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedByDefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.le.acme.email=info@linear-tech.ru"
+      - "--certificatesresolvers.le.acme.storage=/letsencrypt/acme.json"
+      - "--certificatesresolvers.le.acme.tlschallenge=true"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - traefik_certs:/letsencrypt
+    networks: [app]
+
+  strapi:
+    image: strapi/strapi:5.51
+    restart: unless-stopped
+    environment:
+      DATABASE_CLIENT: postgres
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_NAME: linear_tech
+      DATABASE_USERNAME: strapi
+      DATABASE_PASSWORD: ${DB_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+      ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
+      APP_KEYS: ${APP_KEYS}
+      API_TOKEN_SALT: ${API_TOKEN_SALT}
+      NODE_ENV: production
+    volumes:
+      - strapi_uploads:/srv/app/public/uploads
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.strapi.rule=Host(`api.linear-tech.ru`)"
+      - "traefik.http.routers.strapi.tls.certresolver=le"
+    networks: [app]
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  nextjs:
+    build: ./frontend
+    restart: unless-stopped
+    environment:
+      STRAPI_URL: http://strapi:1337
+      STRAPI_TOKEN: ${STRAPI_TOKEN}
+      MEILISEARCH_HOST: http://meilisearch:7700
+      MEILISEARCH_API_KEY: ${MEILI_MASTER_KEY}
+      REDIS_URL: redis://redis:6379
+      NEXT_PUBLIC_SITE_URL: https://linear-tech.ru
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.nextjs.rule=Host(`linear-tech.ru`) || Host(`www.linear-tech.ru`)"
+      - "traefik.http.routers.nextjs.tls.certresolver=le"
+    networks: [app]
+    depends_on: [strapi]
+
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: linear_tech
+      POSTGRES_USER: strapi
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./db/backups:/backups
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U strapi -d linear_tech"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks: [app]
+
+  meilisearch:
+    image: getmeili/meilisearch:v1.10
+    restart: unless-stopped
+    environment:
+      MEILI_MASTER_KEY: ${MEILI_MASTER_KEY}
+      MEILI_ENV: production
+      MEILI_MAX_INDEXING_MEMORY: 512MB
+    volumes:
+      - meili_data:/meili_data
+    networks: [app]
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
+    volumes:
+      - redis_data:/data
+    networks: [app]
+
+volumes:
+  postgres_data:
+  strapi_uploads:
+  traefik_certs:
+  meili_data:
+  redis_data:
+
+networks:
+  app:
+    driver: bridge

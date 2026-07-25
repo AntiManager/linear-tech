@@ -1,0 +1,57 @@
+{
+  "kind": "collectionType",
+  "collectionName": "orders",
+  "info": {
+    "singularName": "order",
+    "pluralName": "orders",
+    "displayName": "Order",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false,
+    "comment": ""
+  },
+  "attributes": {
+    "company": {
+      "type": "string"
+    },
+    "inn": {
+      "type": "string"
+    },
+    "contact_name": {
+      "type": "string",
+      "required": true
+    },
+    "phone": {
+      "type": "string",
+      "required": true
+    },
+    "email": {
+      "type": "email"
+    },
+    "items": {
+      "type": "json"
+    },
+    "comment": {
+      "type": "text"
+    },
+    "attachment": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["files"]
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": ["new", "processing", "sent", "closed", "cancelled"]
+    },
+    "bitrix_lead_id": {
+      "type": "integer"
+    },
+    "total_amount": {
+      "type": "decimal"
+    },
+    "source": {
+      "type": "string"
+    }
+  }
+}

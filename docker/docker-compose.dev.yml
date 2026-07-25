@@ -1,0 +1,32 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    ports: ["5432:5432"]
+    environment:
+      POSTGRES_DB: linear_tech
+      POSTGRES_USER: strapi
+      POSTGRES_PASSWORD: devpassword
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U strapi -d linear_tech"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  meilisearch:
+    image: getmeili/meilisearch:v1.10
+    ports: ["7700:7700"]
+    environment:
+      MEILI_MASTER_KEY: devkey
+      MEILI_ENV: development
+    volumes:
+      - meili_data:/meili_data
+
+  redis:
+    image: redis:7-alpine
+    ports: ["6379:6379"]
+
+volumes:
+  postgres_data:
+  meili_data:
