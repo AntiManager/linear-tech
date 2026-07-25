@@ -29,7 +29,7 @@ export async function fetchProducts(categorySlug: string): Promise<Product[]> {
       'filters[category][slug][$eq]': categorySlug,
       populate: 'image,pdf_catalog,category',
       'pagination[limit]': '50',
-      sort: 'order:asc',
+      sort: 'name:asc',
     })
   );
 }
@@ -48,7 +48,7 @@ export async function fetchCategories(): Promise<Category[]> {
 }
 
 export async function fetchArticles(): Promise<Article[]> {
-  return fetchAPI<Article[]>('/articles?populate=cover,category&sort=published_at:desc');
+  return fetchAPI<Article[]>('/articles?populate=cover,related_products&sort=publishedAt:desc');
 }
 
 export async function fetchArticle(slug: string): Promise<Article | null> {

@@ -3,9 +3,11 @@
 import { FormEvent, useState, useRef } from 'react';
 import Button from '../ui/Button';
 import Input from '../ui/Input';
+import type { BasketItem } from './RFQBasket';
 
 interface RFQFormProps {
   onSuccess?: () => void;
+  items?: BasketItem[];
 }
 
 interface FormData {
@@ -24,7 +26,7 @@ interface FormErrors {
   comment?: string;
 }
 
-export default function RFQForm({ onSuccess }: RFQFormProps) {
+export default function RFQForm({ onSuccess, items = [] }: RFQFormProps) {
   const [form, setForm] = useState<FormData>({
     company: '',
     contact_name: '',
@@ -69,6 +71,9 @@ export default function RFQForm({ onSuccess }: RFQFormProps) {
       body.append('phone', form.phone);
       body.append('email', form.email);
       body.append('comment', form.comment);
+      if (items.length > 0) {
+        body.append('items', JSON.stringify(items));
+      }
       if (file) body.append('file', file);
 
       const res = await fetch('/api/quote', { method: 'POST', body });

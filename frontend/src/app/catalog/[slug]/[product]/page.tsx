@@ -154,7 +154,7 @@ export default async function ProductPage({ params }: Props) {
             <p className="mb-6 text-text/80">{product.short_desc || product.description}</p>
 
             <div className="flex flex-wrap gap-3">
-              <Link href={`/api/quote?product=${product.slug}`}>
+              <Link href={`/rfq?product=${product.slug}`}>
                 <Button>Запросить КП</Button>
               </Link>
               {product.pdf_catalog && (

@@ -3,25 +3,27 @@ import SearchBar from '@/components/search/SearchBar';
 import { fetchCategories, fetchArticles } from '@/lib/strapi';
 import type { Category, Article } from '@/types';
 
-const categories: { name: string; slug: string; icon: string; desc: string }[] = [
-  { name: 'Линейные направляющие', slug: 'lineynye-napravlyayushchie', icon: 'M4 6h16M4 12h16M4 18h16', desc: 'HIWIN, рельсы, каретки, блоки' },
-  { name: 'Шарико-винтовые пары (ШВП)', slug: 'sharikovintovye-pary-shvp', icon: 'M12 4v16M4 12h16', desc: 'ШВП HIWIN, гайки, фланцы' },
-  { name: 'Линейные актуаторы', slug: 'lineynye-aktuary', icon: 'M5 12h14M12 5l7 7-7 7', desc: 'Электрические цилиндры' },
-  { name: 'Сервоприводы Delta', slug: 'servoprivody', icon: 'M13 10V3L4 14h7v7l9-11h-7z', desc: 'Drake серии ASD-A2, B2' },
-  { name: 'Муфты и тормоза', slug: 'mufty-i-tormoza', icon: 'M8 7h8M8 12h8M8 17h8', desc: 'Соединительные муфты' },
-  { name: 'Ремни и шкивы', slug: 'remni-i-shkivy', icon: 'M4 12a8 8 0 0116 0', desc: 'Зубчатые ремни, шкивы' },
+const DEFAULT_ICONS = [
+  'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z',
+  'M12 2l-5 5h3v10H7l5 5 5-5h-3V7h3L12 2z',
+  'M9 9l10-5-5 10-5-5zm-4 5l4 4-4 4-4-4 4-4z',
+  'M13 10V3L4 14h7v7l9-11h-7z',
+  'M12 2a10 10 0 1010 10M12 2v4m0 0a6 6 0 016 6h-4m-2-2l4-4',
+  'M4 12a8 8 0 0116 0M4 12a8 8 0 0016 0',
 ];
 
-const iconPaths: Record<string, string> = {
-  'lineynye-napravlyayushchie': 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z',
-  'sharikovintovye-pary-shvp': 'M12 2l-5 5h3v10H7l5 5 5-5h-3V7h3L12 2z',
-  'lineynye-aktuary': 'M9 9l10-5-5 10-5-5zm-4 5l4 4-4 4-4-4 4-4z',
-  'servoprivody': 'M13 10V3L4 14h7v7l9-11h-7z',
-  'mufty-i-tormoza': 'M12 2a10 10 0 1010 10M12 2v4m0 0a6 6 0 016 6h-4m-2-2l4-4',
-  'remni-i-shkivy': 'M4 12a8 8 0 0116 0M4 12a8 8 0 0016 0',
-};
+function shortenDesc(html: string, maxLen = 80): string {
+  const text = html.replace(/<[^>]+>/g, '').replace(/&[^;]+;/g, '').trim();
+  if (text.length <= maxLen) return text;
+  return text.slice(0, maxLen).replace(/\s+\S*$/, '') + '…';
+}
 
 export default async function HomePage() {
+  let categories: Category[] = [];
+  try {
+    categories = await fetchCategories();
+  } catch {}
+
   let articles: Article[] = [];
   try {
     articles = await fetchArticles();
@@ -47,30 +49,32 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="bg-surface py-16">
-        <div className="container mx-auto px-4">
-          <h2 className="mb-8 text-2xl font-bold text-text">Категории продукции</h2>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {categories.map((cat) => (
-              <Link
-                key={cat.slug}
-                href={`/catalog/${cat.slug}`}
-                className="group flex items-start gap-4 rounded-card border border-gray-200 bg-bg p-5 transition-shadow hover:shadow-md"
-              >
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d={iconPaths[cat.slug] || 'M4 6h16M4 12h16M4 18h16'} />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="font-semibold text-text group-hover:text-accent">{cat.name}</h3>
-                  <p className="mt-1 text-sm text-muted">{cat.desc}</p>
-                </div>
-              </Link>
-            ))}
+      {categories.length > 0 && (
+        <section className="bg-surface py-16">
+          <div className="container mx-auto px-4">
+            <h2 className="mb-8 text-2xl font-bold text-text">Категории продукции</h2>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {categories.slice(0, 6).map((cat, i) => (
+                <Link
+                  key={cat.slug}
+                  href={`/catalog/${cat.slug}`}
+                  className="group flex items-start gap-4 rounded-card border border-gray-200 bg-bg p-5 transition-shadow hover:shadow-md"
+                >
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                    <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d={DEFAULT_ICONS[i % DEFAULT_ICONS.length]} />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-text group-hover:text-accent">{cat.name}</h3>
+                    <p className="mt-1 text-sm text-muted">{shortenDesc(cat.description || cat.name)}</p>
+                  </div>
+                </Link>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       <section className="bg-accent py-16 text-white">
         <div className="container mx-auto px-4 text-center">

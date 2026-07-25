@@ -1,6 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createOrder } from '@/lib/strapi';
 
+export async function GET(request: NextRequest) {
+  const product = request.nextUrl.searchParams.get('product');
+  const url = new URL('/rfq', request.nextUrl.origin);
+  if (product) {
+    url.searchParams.set('product', product);
+  }
+  return NextResponse.redirect(url, 302);
+}
+
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
@@ -28,12 +37,22 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ errors }, { status: 422 });
     }
 
+    let items: { productId: number; qty: number; name?: string; article?: string }[] = [];
+    const itemsRaw = (formData.get('items') as string)?.trim();
+    if (itemsRaw) {
+      try {
+        items = JSON.parse(itemsRaw);
+      } catch {
+        /* malformed items — ignore */
+      }
+    }
+
     const orderData = {
       company,
       contact_name,
       phone,
       email: email || undefined,
-      items: [],
+      items,
       comment: comment || undefined,
     };
 

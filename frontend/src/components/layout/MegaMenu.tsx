@@ -8,22 +8,22 @@ interface CategoryItem {
 
 const columns: CategoryItem[][] = [
   [
-    { name: 'Направляющие HIWIN', slug: 'napravlyayushchie-hiwin' },
-    { name: 'ШВП HIWIN', slug: 'shvp-hiwin' },
-    { name: 'Актуаторы HIWIN', slug: 'aktuatory-hiwin' },
-    { name: 'Линейные модули HIWIN', slug: 'lineynye-moduli-hiwin' },
+    { name: 'Направляющие HIWIN', slug: 'profilnie-napravlyajushie' },
+    { name: 'ШВП HIWIN', slug: 'shariko-vintovye-peredachi-shvp' },
+    { name: 'Актуаторы HIWIN', slug: 'actuators-hiwin' },
+    { name: 'Линейные модули HIWIN', slug: 'linear-modules-hiwin' },
   ],
   [
-    { name: 'Сервопривод', slug: 'servoprivod' },
-    { name: 'Шаговый привод', slug: 'shagovyy-privod' },
-    { name: 'Алюминиевый профиль', slug: 'alyuminievyy-profil' },
+    { name: 'Сервопривод', slug: 'servodrives' },
+    { name: 'Шаговый привод', slug: 'shagovyj-privod' },
+    { name: 'Алюминиевый профиль', slug: 'alyuminievyj-profil' },
     { name: 'Подшипники скольжения', slug: 'podshipniki-skolzheniya' },
   ],
   [
     { name: 'Прецизионные валы', slug: 'pretsizionnye-valy' },
     { name: 'Соединительные муфты', slug: 'soedinitelnye-mufty' },
-    { name: 'Виброопоры', slug: 'vibroopory' },
-    { name: 'Rosca производство', slug: 'rosca-proizvodstvo' },
+    { name: 'Виброопоры', slug: 'promyshlennye-vibroopory' },
+    { name: 'Rosca производство', slug: 'trapetseidalnye-khodovye-vinty-i-gajki' },
   ],
 ];
 

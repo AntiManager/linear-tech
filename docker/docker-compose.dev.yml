@@ -27,6 +27,51 @@ services:
     image: redis:7-alpine
     ports: ["6379:6379"]
 
+  strapi:
+    build:
+      context: ../cms
+      dockerfile: Dockerfile.dev
+    ports: ["1337:1337"]
+    environment:
+      DATABASE_CLIENT: postgres
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_NAME: linear_tech
+      DATABASE_USERNAME: strapi
+      DATABASE_PASSWORD: devpassword
+      DATABASE_SSL: "false"
+      JWT_SECRET: wOPnSle2Hh6HJ8fg8Uri9Q==
+      ADMIN_JWT_SECRET: 891iUfDhj6Xablu/guy5ag==
+      APP_KEYS: xAcQBUKmNAUKmVbBG5E+MA==,WLXvp0cJZqLam6USGt4A+w==,ZEE5czqxzfc29a35lSGV4g==,covGqz+jX8/pPCdRJ0ujyQ==
+      API_TOKEN_SALT: Ll6XFr7AqHjnYmqqu/GbSw==
+      MEILISEARCH_HOST: http://meilisearch:7700
+    volumes:
+      - ../cms:/app
+      - /app/node_modules
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  nextjs:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile.dev
+    ports: ["3000:3000"]
+    env_file: ../frontend/.env.local
+    environment:
+      STRAPI_URL: http://strapi:1337
+      MEILISEARCH_HOST: http://meilisearch:7700
+      REDIS_URL: redis://redis:6379
+    volumes:
+      - ../frontend:/app
+      - /app/node_modules
+      - nextjs_data:/app/.next
+    depends_on:
+      - strapi
+      - meilisearch
+      - redis
+
 volumes:
   postgres_data:
   meili_data:
+  nextjs_data:

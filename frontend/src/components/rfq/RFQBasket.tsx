@@ -4,7 +4,7 @@ import { useState, useCallback } from 'react';
 import Link from 'next/link';
 import Button from '../ui/Button';
 
-interface BasketItem {
+export interface BasketItem {
   productId: number;
   name: string;
   article: string;

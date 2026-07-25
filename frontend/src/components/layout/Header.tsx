@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import MegaMenu from './MegaMenu';
 import SearchBar from '../search/SearchBar';
+import { RFQBasketBadge } from '../rfq/RFQBasket';
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -49,6 +50,10 @@ export default function Header() {
           +7 (343) 382-11-72
         </a>
 
+        <div className="hidden md:flex items-center">
+          <RFQBasketBadge />
+        </div>
+
         <button
           className="ml-auto flex items-center md:hidden"
           onClick={() => setMenuOpen(!menuOpen)}
@@ -79,9 +84,9 @@ export default function Header() {
               </button>
               {megaOpen && (
                 <div className="mt-2 ml-2 space-y-2">
-                  <Link href="/catalog/napravlyayushchie-hiwin" className="block text-sm text-white/70" onClick={() => setMenuOpen(false)}>Направляющие HIWIN</Link>
-                  <Link href="/catalog/shvp-hiwin" className="block text-sm text-white/70" onClick={() => setMenuOpen(false)}>ШВП HIWIN</Link>
-                  <Link href="/catalog/aktuatory-hiwin" className="block text-sm text-white/70" onClick={() => setMenuOpen(false)}>Актуаторы HIWIN</Link>
+                  <Link href="/catalog/profilnie-napravlyajushie" className="block text-sm text-white/70" onClick={() => setMenuOpen(false)}>Направляющие HIWIN</Link>
+                  <Link href="/catalog/shariko-vintovye-peredachi-shvp" className="block text-sm text-white/70" onClick={() => setMenuOpen(false)}>ШВП HIWIN</Link>
+                  <Link href="/catalog/actuators-hiwin" className="block text-sm text-white/70" onClick={() => setMenuOpen(false)}>Актуаторы HIWIN</Link>
                   <Link href="/catalog" className="block text-sm text-accent" onClick={() => setMenuOpen(false)}>Весь каталог</Link>
                 </div>
               )}
