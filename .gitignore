@@ -8,6 +8,11 @@ data/pdf/*
 # Environment
 .env
 .env.local
+# Strapi uploaded files (generated at runtime)
+cms/public/uploads/
+# Kilo agent manager state (downloaded models, run state)
+.kilo/node_modules/
+.kilo/.gitignore
 .env.*.local
 .env.production
 cms/.env

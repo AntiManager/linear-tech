@@ -4,7 +4,8 @@ const STRAPI_URL = process.env.STRAPI_URL || 'http://localhost:1337';
 const STRAPI_TOKEN = process.env.STRAPI_TOKEN;
 
 async function fetchAPI<T>(endpoint: string, options?: RequestInit): Promise<T> {
-  const res = await fetch(`${STRAPI_URL}/api${endpoint}`, {
+  const url = `${STRAPI_URL}/api${endpoint}`;
+  const res = await fetch(url, {
     headers: {
       Authorization: `Bearer ${STRAPI_TOKEN}`,
       'Content-Type': 'application/json',
@@ -14,6 +15,7 @@ async function fetchAPI<T>(endpoint: string, options?: RequestInit): Promise<T> 
     next: {
       revalidate: (options?.next as { revalidate?: number })?.revalidate ?? 3600,
     },
+    cache: process.env.NODE_ENV === 'production' ? undefined : 'no-store',
   });
   if (!res.ok) {
     throw new Error(`Strapi API error: ${res.status} ${res.statusText}`);
