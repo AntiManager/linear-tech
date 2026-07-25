@@ -300,14 +300,15 @@ linear-tech.ru/
 
 ### Стек (рекомендация)
 ```
-Фронтенд:   Next.js 14 (SSR/SSG) + Tailwind CSS
-Бэкенд:     Strapi (Headless CMS) или Django Admin
-База:       PostgreSQL
-Поиск:      Meilisearch / Elasticsearch
-Кеширование: Varnish / CDN
-Хостинг:    VPS (Ubuntu) + Docker + Nginx
+Фронтенд:   Next.js 16 (App Router) + React 19 RSC + Tailwind CSS 4
+Бэкенд:     Strapi 5.51 (Headless CMS)
+База:       PostgreSQL 16
+Поиск:      Meilisearch
+Кеширование: Redis 7
+DEV:        Docker Desktop 29 (Windows)
+Хостинг:    VPS (Ubuntu) + Docker Compose v5
 Аналитика:  Яндекс.Метрика + GA4
-CRM:        Интеграция с Битрикс24 (уже используется)
+CRM:        Интеграция с Битрикс24 (последний этап — пока заглушки)
 ```
 
 ### Performance-цели

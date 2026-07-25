@@ -1,9 +1,11 @@
 ---
 name: strapi-cms
-description: "Strapi 5 Headless CMS: content types, API, admin, media, integration with Next.js"
+description: "Strapi 5.51 Headless CMS: Content Types, REST API, admin panel, media library, Next.js 16 integration"
 ---
 
-# Strapi 5 CMS — Content Architecture for Linear Tech
+# Strapi 5.51 CMS — Content Architecture for Linear Tech
+
+**Версия**: Strapi 5.51.0, @strapi/plugin-seo 2.0.9, strapi-plugin-meilisearch 0.16.5
 
 ## Content Types
 

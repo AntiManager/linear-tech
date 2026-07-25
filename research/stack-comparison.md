@@ -7,10 +7,10 @@
 
 ## 1. Кандидаты
 
-### A. Next.js 14 + Strapi 5 (Headless CMS) — ⭐5 Рекомендовано
+### A. Next.js 16 + Strapi 5.51 (Headless CMS) — ⭐5 Рекомендовано
 ```
-Frontend:  Next.js 14 App Router + React 18 RSC + Tailwind CSS 4
-Backend:   Strapi 5 (self-hosted, MIT license)
+Frontend:  Next.js 16 App Router + React 19 RSC + Tailwind CSS 4
+Backend:   Strapi 5.51 (self-hosted, MIT license)
 DB:        PostgreSQL 16
 Search:    Meilisearch (MIT) или PostgreSQL full-text + pg_trgm
 Cache:     Redis 7
@@ -125,14 +125,14 @@ Deploy:    Статический HTML + API на VPS
 
 ## 3. Итоговая рекомендация
 
-**🥇 Next.js 14 + Strapi 5 + PostgreSQL + Meilisearch**
+**🥇 Next.js 16 + Strapi 5.51 + PostgreSQL + Meilisearch**
 
 ### Что это даёт бизнесу:
-1. **Скорость сайта** — инженер найдёт деталь за 5 секунд (поиск по артикулу + SSG)
+1. **Скорость сайта** — инженер найдёт деталь за 5 секунд (поиск по артикулу + SSG/ISR + TurboPack)
 2. **Экономия** — 150 000 ₽/год на лицензии Битрикса уходит в карман, а не вендору
 3. **Выделяемся** — дизайн будет современным, не как у всех конкурентов на Битриксе
 4. **Менеджеры счастливы** — Strapi админка проще Битрикса, обновлять контент легко
-5. **SEO** — Google видит готовый HTML (Server Components), индексация мгновенная
+5. **SEO** — Google видит готовый HTML (React Server Components), индексация мгновенная
 
 ### Что нужно для запуска:
 - VPS: Ubuntu 22.04, 4 GB RAM, 2 vCPU, 50 GB SSD (~1 200 ₽/мес у Reg.ru/Timeweb)

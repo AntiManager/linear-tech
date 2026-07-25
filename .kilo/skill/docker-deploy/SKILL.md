@@ -1,9 +1,9 @@
 ---
 name: docker-deploy
-description: "Docker Compose деплой: Next.js + Strapi + PostgreSQL + Meilisearch + Redis на VPS"
+description: "Docker Compose v5 деплой: Next.js 16 + Strapi 5.51 + PostgreSQL 16 + Meilisearch + Redis 7 на VPS"
 ---
 
-# Docker Deploy — Production Setup
+# Docker Deploy — Production Setup (Docker Compose v5)
 
 ## docker-compose.yml
 
@@ -33,9 +33,9 @@ services:
     networks:
       - app
 
-  # Strapi CMS (админка + API)
+  # Strapi CMS (админка + API) v5
   strapi:
-    image: strapi/strapi:5
+    image: strapi/strapi:5.51
     restart: unless-stopped
     environment:
       DATABASE_CLIENT: postgres

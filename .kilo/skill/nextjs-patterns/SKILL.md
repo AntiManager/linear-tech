@@ -1,9 +1,11 @@
 ---
 name: nextjs-patterns
-description: "Next.js 14+ паттерны: App Router, RSC, SSR/SSG, API Routes, компонентная архитектура, Tailwind CSS"
+description: "Next.js 16 App Router + React 19 RSC: SSR/SSG/ISR, Server Actions, Tailwind CSS 4, TypeScript"
 ---
 
-# Next.js Patterns — B2B Industrial Site
+# Next.js 16 Patterns — B2B Industrial Site
+
+**Версии**: Next.js 16.2.11, React 19.2.8, Tailwind CSS 4.3.3
 
 ## Архитектура
 

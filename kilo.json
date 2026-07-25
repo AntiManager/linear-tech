@@ -21,6 +21,11 @@
       "command": ["C:\\Users\\evgeniy.bogdanov\\AppData\\Local\\npx\\npx.cmd", "-y", "@kaliop/mcp-server-web-scraper"],
       "enabled": true
     },
+    "context7": {
+      "type": "local",
+      "command": ["C:\\Users\\evgeniy.bogdanov\\AppData\\Local\\npx\\npx.cmd", "-y", "@upstash/context7-mcp"],
+      "enabled": true
+    },
     "postgres": {
       "type": "local",
       "command": ["C:\\Users\\evgeniy.bogdanov\\AppData\\Local\\npx\\npx.cmd", "-y", "@anthropic/mcp-server-postgres"],

@@ -11,15 +11,31 @@
 
 ### Архитектура стека
 ```
-Frontend:  Next.js 14 (App Router) + React 18 RSC + Tailwind CSS 4 + TypeScript
-CMS:       Strapi 5 (Headless, self-hosted, MIT)
+Frontend:  Next.js 16 (App Router) + React 19 RSC + Tailwind CSS 4 + TypeScript
+CMS:       Strapi 5.51 (Headless, self-hosted, MIT)
 Database:  PostgreSQL 16
 Search:    Meilisearch (full-text search по артикулам/товарам)
 Cache:     Redis 7
+DEV:       Docker Desktop 29 (Windows) для локальной разработки
 Deploy:    Docker Compose на Ubuntu VPS + GitHub Actions CI/CD
 CDN:       Cloudflare (free)
-CRM:       Интеграция с Битрикс24 через REST API
+CRM:       Интеграция с Битрикс24 через REST API (последний этап — пока заглушки)
 ```
+
+### Актуальные версии (25.07.2026)
+| Компонент | Версия | npm-пакет |
+|-----------|--------|-----------|
+| Next.js | 16.2.11 | `next@latest` |
+| React | 19.2.8 | `react`, `react-dom` |
+| TypeScript | 5.x | `typescript` |
+| Tailwind CSS | 4.3.3 | `tailwindcss` |
+| Strapi | 5.51.0 | `@strapi/strapi` |
+| Strapi SEO | 2.0.9 | `@strapi/plugin-seo` |
+| Meilisearch | 0.60.0 | `meilisearch` (JS client) |
+| Meilisearch (Strapi) | 0.16.5 | `strapi-plugin-meilisearch` (community) |
+| Redis | 7.x | `ioredis` (5.11.1) |
+| Docker Desktop | 29.1.3 | |
+| Docker Compose | 5.0.1 | |
 
 ## Задачи проекта (roadmap)
 1. **Парсинг** — вытащить весь контент, структуру, изображения, PDF со старого сайта
