@@ -26,6 +26,16 @@
       "command": ["C:\\Users\\evgeniy.bogdanov\\AppData\\Local\\npx\\npx.cmd", "-y", "@upstash/context7-mcp"],
       "enabled": true
     },
+    "playwright": {
+      "type": "local",
+      "command": ["C:\\Users\\evgeniy.bogdanov\\AppData\\Local\\npx\\npx.cmd", "-y", "@playwright/mcp"],
+      "enabled": true
+    },
+    "lighthouse": {
+      "type": "local",
+      "command": ["C:\\Users\\evgeniy.bogdanov\\AppData\\Local\\npx\\npx.cmd", "-y", "@danielsogl/lighthouse-mcp"],
+      "enabled": true
+    },
     "postgres": {
       "type": "local",
       "command": ["C:\\Users\\evgeniy.bogdanov\\AppData\\Local\\npx\\npx.cmd", "-y", "@anthropic/mcp-server-postgres"],
