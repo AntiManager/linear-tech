@@ -1,10 +1,8 @@
 ﻿# Kilo
 .kilo/agent-manager.json
 
-# Data (generated)
-data/images/*
+# Data (images are small enough to track; PDFs are huge — re-download with scripts/download_media.py)
 data/pdf/*
-!data/images/.gitkeep
 !data/pdf/.gitkeep
 
 # Environment
