@@ -13,6 +13,8 @@ cms/public/uploads/
 # Kilo agent manager state (downloaded models, run state)
 .kilo/node_modules/
 .kilo/.gitignore
+# Generated reports
+content-audit.json
 .env.*.local
 .env.production
 cms/.env

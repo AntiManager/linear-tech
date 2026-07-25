@@ -4,6 +4,7 @@ import type { Metadata } from 'next';
 import { fetchArticles, fetchArticle } from '@/lib/strapi';
 import type { Article } from '@/types';
 import ProductCard from '@/components/catalog/ProductCard';
+import { mdToHtml } from '@/lib/utils';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -87,7 +88,7 @@ export default async function ArticlePage({ params }: Props) {
         )}
 
         <div className="prose prose-gray max-w-none text-text/80 leading-relaxed">
-          <div dangerouslySetInnerHTML={{ __html: article.content }} />
+          <div dangerouslySetInnerHTML={{ __html: mdToHtml(article.content) }} />
         </div>
 
         <div className="mt-8 flex items-center gap-4 border-t border-gray-200 pt-6">

@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { fetchCategories, fetchProducts, fetchProduct } from '@/lib/strapi';
-import { formatPrice, stockStatusLabel } from '@/lib/utils';
+import { formatPrice, stockStatusLabel, mdToHtml } from '@/lib/utils';
 import type { Product, Category } from '@/types';
 import Badge from '@/components/ui/Badge';
 import Button from '@/components/ui/Button';
@@ -151,7 +151,7 @@ export default async function ProductPage({ params }: Props) {
               )}
             </div>
 
-            <p className="mb-6 text-text/80">{product.short_desc || product.description}</p>
+            <div className="mb-6 text-text/80" dangerouslySetInnerHTML={{ __html: mdToHtml(product.short_desc || product.description) }} />
 
             <div className="flex flex-wrap gap-3">
               <Link href={`/rfq?product=${product.slug}`}>
@@ -187,7 +187,7 @@ export default async function ProductPage({ params }: Props) {
 
           <div className="py-6">
             <div className="prose prose-sm max-w-none text-text/80">
-              {product.description || 'Описание отсутствует.'}
+              <div dangerouslySetInnerHTML={{ __html: mdToHtml(product.description || 'Описание отсутствует.') }} />
             </div>
           </div>
 

@@ -5,6 +5,7 @@ import type { Metadata } from 'next';
 import { fetchCategories, fetchProducts } from '@/lib/strapi';
 import type { Category, Product } from '@/types';
 import CatalogClient from '@/components/catalog/CatalogClient';
+import { mdToHtml } from '@/lib/utils';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -67,7 +68,7 @@ export default async function CatalogPage({ params }: Props) {
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-text">{cat.name}</h1>
         {cat.description && (
-          <p className="mt-2 text-muted">{cat.description}</p>
+          <div className="mt-2 text-muted" dangerouslySetInnerHTML={{ __html: mdToHtml(cat.description) }} />
         )}
       </div>
 

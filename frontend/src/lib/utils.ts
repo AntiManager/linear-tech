@@ -1,3 +1,10 @@
+import { marked } from 'marked';
+
+export function mdToHtml(md: string | undefined | null): string {
+  if (!md) return '';
+  return marked.parse(md, { async: false }) as string;
+}
+
 export function formatPrice(price: number | null): string {
   if (price === null) return 'По запросу';
   return new Intl.NumberFormat('ru-RU', {
