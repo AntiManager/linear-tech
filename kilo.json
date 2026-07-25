@@ -1,0 +1,55 @@
+﻿{
+  "$schema": "https://app.kilo.ai/config.json",
+  "model": "anthropic/claude-sonnet-4-20250514",
+  "default_agent": "architect",
+  "instructions": [
+    "AGENTS.md",
+    ".kilo/agent/*.md"
+  ],
+  "snapshot": true,
+  "skills": {
+    "paths": [".kilo/skill"]
+  },
+  "mcp": {
+    "github": {
+      "type": "local",
+      "command": ["C:\\Users\\evgeniy.bogdanov\\AppData\\Local\\npx\\npx.cmd", "-y", "@modelcontextprotocol/server-github"],
+      "enabled": true
+    },
+    "web-scraper": {
+      "type": "local",
+      "command": ["C:\\Users\\evgeniy.bogdanov\\AppData\\Local\\npx\\npx.cmd", "-y", "@kaliop/mcp-server-web-scraper"],
+      "enabled": true
+    }
+  },
+  "permission": {
+    "bash": "allow",
+    "read": "allow",
+    "glob": "allow",
+    "grep": "allow",
+    "webfetch": "allow",
+    "question": "allow",
+    "semantic_search": "allow",
+    "github_*": "ask",
+    "edit": {
+      "kilo.json": "allow",
+      "AGENTS.md": "allow",
+      ".kilo/**": "allow",
+      "docs/**": "allow",
+      "src/**": "allow",
+      "scripts/**": "allow",
+      "tests/**": "allow",
+      "design/**": "allow",
+      "research/**": "allow",
+      "package.json": "allow",
+      "requirements.txt": "allow",
+      "Dockerfile": "allow",
+      "docker-compose.yml": "allow",
+      "nginx.conf": "allow",
+      ".env*": "deny",
+      "node_modules/**": "deny",
+      ".git/**": "deny",
+      "*": "ask"
+    }
+  }
+}
