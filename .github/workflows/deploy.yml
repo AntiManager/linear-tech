@@ -21,22 +21,3 @@ jobs:
       # E2E tests require full stack (Strapi + PostgreSQL + Meilisearch).
       # Run locally: npm run test:e2e
       # Will be added to CI when staging environment is set up.
-
-  deploy:
-    needs: [test]
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
-    environment: production
-    steps:
-      - uses: actions/checkout@v4
-      - name: Deploy via SSH
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_SSH_KEY }}
-          script: |
-            cd /opt/linear-tech
-            git pull origin master
-            docker compose up -d --build nextjs
-            docker compose restart strapi
