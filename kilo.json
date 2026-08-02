@@ -1,4 +1,4 @@
-﻿{
+{
   "$schema": "https://app.kilo.ai/config.json",
   "model": "anthropic/claude-sonnet-4-20250514",
   "default_agent": "architect",
@@ -6,41 +6,79 @@
     "AGENTS.md",
     ".kilo/agent/*.md"
   ],
-  "snapshot": true,
+  "snapshot": false,
   "skills": {
-    "paths": [".kilo/skill"]
+    "paths": [
+      ".kilo/skill"
+    ]
   },
   "mcp": {
     "github": {
       "type": "local",
-      "command": ["C:\\Users\\evgeniy.bogdanov\\AppData\\Local\\npx\\npx.cmd", "-y", "@modelcontextprotocol/server-github"],
+      "command": [
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-github"
+      ],
       "enabled": true
     },
     "web-scraper": {
       "type": "local",
-      "command": ["C:\\Users\\evgeniy.bogdanov\\AppData\\Local\\npx\\npx.cmd", "-y", "@kaliop/mcp-server-web-scraper"],
+      "command": [
+        "npx",
+        "-y",
+        "@kaliop/mcp-server-web-scraper"
+      ],
       "enabled": true
     },
     "context7": {
       "type": "local",
-      "command": ["C:\\Users\\evgeniy.bogdanov\\AppData\\Local\\npx\\npx.cmd", "-y", "@upstash/context7-mcp"],
+      "command": [
+        "npx",
+        "-y",
+        "@upstash/context7-mcp"
+      ],
       "enabled": true
     },
     "playwright": {
       "type": "local",
-      "command": ["C:\\Users\\evgeniy.bogdanov\\AppData\\Local\\npx\\npx.cmd", "-y", "@playwright/mcp"],
+      "command": [
+        "npx",
+        "-y",
+        "@playwright/mcp"
+      ],
       "enabled": true
     },
     "lighthouse": {
       "type": "local",
-      "command": ["C:\\Users\\evgeniy.bogdanov\\AppData\\Local\\npx\\npx.cmd", "-y", "@danielsogl/lighthouse-mcp"],
+      "command": [
+        "npx",
+        "-y",
+        "@danielsogl/lighthouse-mcp"
+      ],
       "enabled": true
     },
     "postgres": {
       "type": "local",
-      "command": ["C:\\Users\\evgeniy.bogdanov\\AppData\\Local\\npx\\npx.cmd", "-y", "@anthropic/mcp-server-postgres"],
-      "args": ["postgresql://strapi:${DB_PASSWORD}@localhost:5432/linear_tech"],
+      "command": [
+        "npx",
+        "-y",
+        "@anthropic/mcp-server-postgres"
+      ],
+      "args": [
+        "postgresql://strapi:${DB_PASSWORD}@localhost:5432/linear_tech"
+      ],
       "enabled": false
+    },
+    "powerbi-modeling-mcp": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "@microsoft/powerbi-modeling-mcp@latest",
+        "--start"
+      ],
+      "enabled": true
     }
   },
   "permission": {
