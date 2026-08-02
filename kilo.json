@@ -22,15 +22,6 @@
       ],
       "enabled": true
     },
-    "web-scraper": {
-      "type": "local",
-      "command": [
-        "npx",
-        "-y",
-        "@kaliop/mcp-server-web-scraper"
-      ],
-      "enabled": true
-    },
     "context7": {
       "type": "local",
       "command": [
@@ -75,7 +66,7 @@
       "command": [
         "npx",
         "-y",
-        "@microsoft/powerbi-modeling-mcp@latest",
+        "@microsoft/powerbi-modeling-mcp@0.5.0-beta.12",
         "--start"
       ],
       "enabled": true
