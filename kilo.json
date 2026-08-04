@@ -3,8 +3,7 @@
   "model": "anthropic/claude-sonnet-4-20250514",
   "default_agent": "architect",
   "instructions": [
-    "AGENTS.md",
-    ".kilo/agent/*.md"
+    "AGENTS.md", ".kilo/agent/*.md", ".memory/project_brief.md", ".memory/active_context.md", ".memory/progress.md", ".memory/tech_context.md", ".memory/system_patterns.md"
   ],
   "snapshot": false,
   "skills": {
